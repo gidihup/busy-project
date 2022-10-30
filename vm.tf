@@ -62,9 +62,9 @@ resource "aws_instance" "app-vm-1" {
   key_name               = "app-key"
   instance_type          = "t3.micro"
   availability_zone      = "us-east-2a"
-  subnet_id              = aws_subnet.public-1
+  subnet_id              = aws_subnet.public-1.id
   vpc_security_group_ids = [aws_security_group.app-vm-sg.id]
-  iam_instance_profile = aws_iam_instance_profile.app-vm-iam
+  iam_instance_profile = aws_iam_instance_profile.app-vm-iam.id
   user_data = <<EOF
     #!/bin/bash
     echo "Cloning the flask app repo"
@@ -80,9 +80,9 @@ resource "aws_instance" "app-vm-2" {
   key_name               = "app-key"
   instance_type          = "t3.micro"
   availability_zone      = "us-east-2b"
-  subnet_id              = aws_subnet.public-2
+  subnet_id              = aws_subnet.public-2.id
   vpc_security_group_ids = [aws_security_group.app-vm-sg.id]
-  iam_instance_profile = aws_iam_instance_profile.app-vm-iam
+  iam_instance_profile = aws_iam_instance_profile.app-vm-iam.id
   user_data = <<EOF
     #!/bin/bash
     echo "Cloning the flask app repo"
