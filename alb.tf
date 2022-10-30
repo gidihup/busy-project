@@ -65,7 +65,7 @@ resource "aws_lb_target_group_attachment" "app-alb-tga-2" {
 
 resource "aws_alb_listener" "app-listener" {
   load_balancer_arn = aws_lb.app-alb.id
-  port              = 8000
+  port              = 8080
   protocol = "HTTP"
 
   default_action {
