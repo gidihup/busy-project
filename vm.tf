@@ -45,11 +45,21 @@ resource "aws_iam_role" "app-vm-role" {
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
-        Sid    = ""
+        Sid    = "AssumeRole"
         Principal = {
           Service = "ec2.amazonaws.com"
         }
       },
+      {
+        "Sid": "DescribeQueryAppTable",
+        "Effect": "Allow",
+        "Action": [
+            "dynamodb:DescribeTable",
+            "dynamodb:Query",
+            "dynamodb:Scan"
+        ],
+        "Resource": "arn:aws:dynamodb:us-east-2:account-id:table/candidate-table"
+      }
     ]
   })
 }
@@ -60,13 +70,11 @@ resource "aws_instance" "app-vm-1" {
   #key_name               = "app-key"
   instance_type          = "t3.micro"
   availability_zone      = "us-east-2a"
-  subnet_id              = aws_subnet.public-1.id
+  subnet_id              = aws_subnet.private-1.id
   vpc_security_group_ids = [aws_security_group.app-vm-sg.id]
   iam_instance_profile = aws_iam_instance_profile.app-vm-iam.id
-  user_data = <<EOF
-    #!/bin/bash
-    echo "Cloning the flask app repo"
-    EOF
+  user_data = "${file("install-app.sh")}"
+  user_data_replace_on_change = true
 
   tags = {
     Name = "app-vm-1"
@@ -78,13 +86,11 @@ resource "aws_instance" "app-vm-2" {
   #key_name               = "app-key"
   instance_type          = "t3.micro"
   availability_zone      = "us-east-2b"
-  subnet_id              = aws_subnet.public-2.id
+  subnet_id              = aws_subnet.private-2.id
   vpc_security_group_ids = [aws_security_group.app-vm-sg.id]
   iam_instance_profile = aws_iam_instance_profile.app-vm-iam.id
-  user_data = <<EOF
-    #!/bin/bash
-    echo "Cloning the flask app repo"
-    EOF
+  user_data = "${file("install-app.sh")}"
+  user_data_replace_on_change = true
 
   tags = {
     Name = "app-vm-2"

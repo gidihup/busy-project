@@ -5,8 +5,8 @@ resource "aws_security_group" "app-alb-sg" {
   vpc_id      = aws_vpc.app-vpc.id
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -46,7 +46,7 @@ resource "aws_lb_target_group" "app-alb-tg" {
     port                = 8080
     matcher             = "200-499"
     timeout             = "10"
-    path                = "/"
+    path                = "/gtg"
     unhealthy_threshold = "2"
   }
 }
@@ -65,7 +65,7 @@ resource "aws_lb_target_group_attachment" "app-alb-tga-2" {
 
 resource "aws_alb_listener" "app-listener" {
   load_balancer_arn = aws_lb.app-alb.id
-  port              = 8080
+  port              = 80
   protocol = "HTTP"
 
   default_action {
