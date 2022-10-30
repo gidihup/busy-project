@@ -1,4 +1,4 @@
-resource "aws_dynamodb_table" "basic-dynamodb-table" {
+resource "aws_dynamodb_table" "app-dynamodb-table" {
   name           = "GameScores"
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
@@ -14,11 +14,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   attribute {
     name = "GameTitle"
     type = "S"
-  }
-
-  attribute {
-    name = "TopScore"
-    type = "N"
   }
 
   ttl {
@@ -37,7 +32,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   }
 
   tags = {
-    Name        = "dynamodb-table-1"
-    Environment = "production"
+    Name        = "app-dynamodb-table"
   }
 }

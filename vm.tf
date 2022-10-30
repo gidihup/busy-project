@@ -59,7 +59,7 @@ EOF
 # Application VMs
 resource "aws_instance" "app-vm-1" {
   ami                    = var.AMI_ID
-  key_name               = "app-key"
+  #key_name               = "app-key"
   instance_type          = "t3.micro"
   availability_zone      = "us-east-2a"
   subnet_id              = aws_subnet.public-1.id
@@ -77,7 +77,7 @@ resource "aws_instance" "app-vm-1" {
 
 resource "aws_instance" "app-vm-2" {
   ami                    = var.AMI_ID
-  key_name               = "app-key"
+  #key_name               = "app-key"
   instance_type          = "t3.micro"
   availability_zone      = "us-east-2b"
   subnet_id              = aws_subnet.public-2.id
