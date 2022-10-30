@@ -3,7 +3,7 @@ variable AWS_REGION {
 }
 
 variable AMI_ID {
-  default = "ami-03dea29b0216a1e03"
+  default = "ami-089a545a9ed9893b6"
 }
 
 variable EC2_USER {
