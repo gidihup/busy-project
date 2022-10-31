@@ -3,13 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       Destroy:
-        description: Enter a 'no' or 'yes' to destroy app stack
+        description: Enter a 'yes' to destroy app stack
         required: true
         default: 'no'
         type: string
 
 jobs:
-  provision-app-stack:
+  destroy-app-stack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
