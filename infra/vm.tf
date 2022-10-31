@@ -30,9 +30,29 @@ resource "aws_security_group" "app-vm-sg" {
   }
 }
 
+# Roles and permissions for app instances
 resource "aws_iam_instance_profile" "app-vm-iam" {
   name = "app-vm-instance-profile"
   role = aws_iam_role.app-vm-role.name
+}
+
+resource "aws_iam_policy" "app-vm-policy" {
+  name = "app-vm-policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        "Sid": "DescribeQueryAppTable",
+        "Effect": "Allow",
+        "Action": [
+            "dynamodb:DescribeTable",
+            "dynamodb:Query",
+            "dynamodb:Scan"
+        ],
+        "Resource": "${aws_dynamodb_table.candidate-table.arn}"
+      },
+    ]
+  })
 }
 
 resource "aws_iam_role" "app-vm-role" {
@@ -50,18 +70,13 @@ resource "aws_iam_role" "app-vm-role" {
           Service = "ec2.amazonaws.com"
         }
       },
-      {
-        "Sid": "DescribeQueryAppTable",
-        "Effect": "Allow",
-        "Action": [
-            "dynamodb:DescribeTable",
-            "dynamodb:Query",
-            "dynamodb:Scan"
-        ],
-        "Resource": "arn:aws:dynamodb:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:table/candidate-table"
-      }
     ]
   })
+}
+
+resource "aws_iam_role_policy_attachment" "app-vm-role-attach" {
+  role       = aws_iam_role.app-vm-role.name
+  policy_arn = aws_iam_policy.app-vm-policy.arn
 }
 
 # Application VMs
