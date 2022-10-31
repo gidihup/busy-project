@@ -31,7 +31,7 @@ jobs:
         id:   destroy
         # TODO: change project directory
         run: |
-          cd busy-project/ 
+          cd infra
           terraform init
           terraform validate
           terraform plan 

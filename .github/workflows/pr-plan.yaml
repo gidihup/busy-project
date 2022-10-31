@@ -28,7 +28,7 @@ jobs:
         id: plan
         continue-on-error: true
         run: |
-          cd busy-project
+          cd infra
           terraform init
           terraform validate
           terraform plan
