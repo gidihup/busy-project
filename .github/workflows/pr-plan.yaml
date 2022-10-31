@@ -1,15 +1,12 @@
-name: Destroy app stack
+name: Terraform plan on PR
 on:
-  workflow_dispatch:
-    inputs:
-      Destroy:
-        description: Enter a 'yes' to destroy app stack
-        required: true
-        default: 'no'
-        type: string
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  destroy-app-stack:
+  plan:
+    name: Plan
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -27,12 +24,22 @@ jobs:
         with:
           terraform_version: 1.1.7
           terraform_wrapper: false
-      - name: Terraform Destroy
-        id:   destroy
-        # TODO: change project directory
+      - name: Plan Terraform
+        id: plan
+        continue-on-error: true
         run: |
-          cd busy-project/ 
+          cd busy-project
           terraform init
           terraform validate
-          terraform plan 
-          terraform destroy -auto-approve
+          terraform plan
+      - name: Post Plan to GitHub PR
+        if: steps.plan.outcome == 'success'
+        uses: mshick/add-pr-comment@v1
+        with:
+          allow-repeats: true
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]'
+          message: |
+            ## ${{ matrix.path }} plan
+            ```
+            ${{ steps.plan.outputs.stdout || steps.plan.outputs.stderr }}
