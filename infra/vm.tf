@@ -58,7 +58,7 @@ resource "aws_iam_role" "app-vm-role" {
             "dynamodb:Query",
             "dynamodb:Scan"
         ],
-        "Resource": "arn:aws:dynamodb:${var.AWS_REGION}:${var.AWS_ACCOUNT_ID}:table/candidate-table"
+        "Resource": "arn:aws:dynamodb:${var.AWS_REGION}:${data.aws_caller_identity.current.account_id}:table/candidate-table"
       }
     ]
   })
