@@ -74,7 +74,7 @@ resource "aws_instance" "app-vm-1" {
   vpc_security_group_ids = [aws_security_group.app-vm-sg.id]
   iam_instance_profile = aws_iam_instance_profile.app-vm-iam.id
   user_data = "${file("install-app.sh")}"
-  user_data_replace_on_change = true
+  user_data_replace_on_change = "true"
 
   tags = {
     Name = "app-vm-1"
@@ -90,7 +90,7 @@ resource "aws_instance" "app-vm-2" {
   vpc_security_group_ids = [aws_security_group.app-vm-sg.id]
   iam_instance_profile = aws_iam_instance_profile.app-vm-iam.id
   user_data = "${file("install-app.sh")}"
-  user_data_replace_on_change = true
+  user_data_replace_on_change = "true"
 
   tags = {
     Name = "app-vm-2"
