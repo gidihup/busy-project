@@ -31,4 +31,6 @@ jobs:
         run: |
           cd infra
           export REPO_TOKEN=$REPO_TOKEN
+          echo $REPO_TOKEN
+          envsubst '$REPO_TOKEN' < install-app.sh > install-app.sh
           cat install-app.sh
