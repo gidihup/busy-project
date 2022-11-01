@@ -26,9 +26,11 @@ jobs:
           terraform_wrapper: false
       - name: Terraform Apply
         id:   apply
-        # TODO: change project directory
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         run: |
           cd infra
+          export GITHUB_TOKEN=$GITHUB_TOKEN
           terraform init
           terraform validate
           terraform plan 

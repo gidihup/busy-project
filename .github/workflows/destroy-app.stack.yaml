@@ -10,6 +10,7 @@ on:
 
 jobs:
   destroy-app-stack:
+    if: "${{ github.event.inputs.Destroy }}" == 'yes'
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -29,7 +30,6 @@ jobs:
           terraform_wrapper: false
       - name: Terraform Destroy
         id:   destroy
-        # TODO: change project directory
         run: |
           cd infra
           terraform init

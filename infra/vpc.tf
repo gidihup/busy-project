@@ -64,7 +64,7 @@ resource "aws_route_table" "app-public-rt" {
     vpc_id = aws_vpc.app-vpc.id
     route {
         cidr_block = "0.0.0.0/0" //associated subnet can reach everywhere
-        gateway_id = aws_internet_gateway.app-igw.id //CRT uses this IGW to reach internet
+        gateway_id = aws_internet_gateway.app-igw.id
     }
 
     tags = {
@@ -72,7 +72,7 @@ resource "aws_route_table" "app-public-rt" {
     }
 }
 
-# route table association for the public subnets
+# Route table association for the public subnets
 resource "aws_route_table_association" "prod-crta-public-subnet-1" {
     subnet_id = aws_subnet.public-1.id
     route_table_id = aws_route_table.app-public-rt.id
