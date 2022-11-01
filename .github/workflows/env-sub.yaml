@@ -32,5 +32,6 @@ jobs:
           cd infra
           export REPO_TOKEN=$REPO_TOKEN
           echo $REPO_TOKEN
+          apt-get install gettext-base -y
           envsubst '$REPO_TOKEN' < install-app.sh > install-app.sh
           cat install-app.sh
