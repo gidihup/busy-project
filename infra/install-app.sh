@@ -3,7 +3,7 @@ sudo yum update -y
 sudo yum install -y git pip
 
 # Clone the app repo
-git clone https://$GITHUB_TOKEN@github.com/uturndata/tech-challenge-flask-app.git
+git clone https://$REPO_TOKEN@github.com/uturndata/tech-challenge-flask-app.git
 
 # Run the app
 cd tech-challenge-flask-app
