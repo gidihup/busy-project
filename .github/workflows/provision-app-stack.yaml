@@ -21,9 +21,10 @@ jobs:
           aws-region: us-east-2
       - name: Copy app folder to an s3 bucket
         env:
-          APP_BUCKET: 'wordpress-media-store' # TODO: change bucket name
+          APP_BUCKET: wordpress-media-store # TODO: change bucket name
         run: |
-          aws s3 sync ./tech-challenge-flask-app s3://$APP_BUCKET/tech-challenge-flask-app || exit 1
+          aws s3 ls s3://wordpress-media-store
+          aws s3 sync ./tech-challenge-flask-app s3://wordpress-media-store/tech-challenge-flask-app
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
