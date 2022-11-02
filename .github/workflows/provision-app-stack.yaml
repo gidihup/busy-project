@@ -23,7 +23,7 @@ jobs:
         env:
           APP_BUCKET: hdms-test-mobileapp-deeplinking
         run: |
-          aws s3 sync './tech-challenge-flask-app' 's3://$APP_BUCKET'
+          aws s3 sync "./tech-challenge-flask-app" "s3://$APP_BUCKET"
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
