@@ -23,8 +23,7 @@ jobs:
         env:
           APP_BUCKET: 'wordpress-media-store' # TODO: change bucket name
         run: |
-          aws s3 ls
-          aws s3 sync ./tech-challenge-flask-app s3://$APP_BUCKET
+          aws s3 sync ./tech-challenge-flask-app s3://$APP_BUCKET/tech-challenge-flask-app || exit 1
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
