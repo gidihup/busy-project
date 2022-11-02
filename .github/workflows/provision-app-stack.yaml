@@ -20,8 +20,8 @@ jobs:
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: us-east-2
       - name: Copy app folder to an s3 bucket
-        run: |
-          aws s3 cp tech-challenge-flask-app 's3://hdms-test-mobileapp-deeplinking/' --recursive
+        run:
+          aws s3 sync tech-challenge-flask-app s3://hdms-test-mobileapp-deeplinking
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
