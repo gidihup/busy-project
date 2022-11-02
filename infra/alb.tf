@@ -1,7 +1,7 @@
 ## Backend API ALB security group
 resource "aws_security_group" "app-alb-sg" {
   name        = "app-alb-sg"
-  description = "Allow HTTP inbound traffic to app ALB on port 8080"
+  description = "Allow HTTP inbound traffic to app ALB on port 80"
   vpc_id      = aws_vpc.app-vpc.id
 
   ingress {

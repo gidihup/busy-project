@@ -13,12 +13,24 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
+      - name: Checkout app repo
+        uses: actions/checkout@v3
+        with:
+          repository: uturndata/tech-challenge-flask-app.git
+          path: ./tech-challenge-flask-app
+          submodules: recursive
+          token: ${{ secrets.REPO_TOKEN }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: us-east-2
+      - name: Copy app folder to an s3 bucket
+        env:
+          APP_BUCKET: s3://wordpress-media-store # TODO: change bucket name
+        run: |
+          aws s3 sync tech-challenge-flask-app $APP_BUCKET
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -26,11 +38,8 @@ jobs:
           terraform_wrapper: false
       - name: Terraform Apply
         id:   apply
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         run: |
           cd infra
-          export GITHUB_TOKEN=$GITHUB_TOKEN
           terraform init
           terraform validate
           terraform plan 

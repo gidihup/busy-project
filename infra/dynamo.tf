@@ -8,11 +8,6 @@ resource "aws_dynamodb_table" "candidate-table" {
     type = "S"
   }
 
-  ttl {
-    attribute_name = "TimeToExist"
-    enabled        = false
-  }
-
   tags = {
     Name        = "candidate-table"
   }
