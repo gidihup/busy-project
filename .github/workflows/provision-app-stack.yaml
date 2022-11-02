@@ -13,13 +13,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - name: Checkout app repo
-        uses: actions/checkout@v3
-        with:
-          repository: uturndata/tech-challenge-flask-app.git
-          path: ./tech-challenge-flask-app
-          submodules: recursive
-          token: ${{ secrets.REPO_TOKEN }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
