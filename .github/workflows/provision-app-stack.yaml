@@ -21,7 +21,7 @@ jobs:
           aws-region: us-east-2
       - name: Copy app folder to an s3 bucket
         run: |
-          aws s3 sync './tech-challenge-flask-app' 's3://hdms-test-mobileapp-deeplinking'
+          aws s3 sync './tech-challenge-flask-app' 's3://hdms-test-mobileapp-deeplinking/'
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
