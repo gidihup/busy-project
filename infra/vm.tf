@@ -51,6 +51,17 @@ resource "aws_iam_policy" "app-vm-policy" {
         ],
         "Resource": "${aws_dynamodb_table.candidate-table.arn}"
       },
+      {
+        "Sid": "ReadOnlyBucketPolicy",
+        "Effect": "Allow",
+        "Action": [
+          "s3:ListBucket",
+          "s3:GetObject*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
     ]
   })
 }

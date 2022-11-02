@@ -3,7 +3,7 @@ on:
   # Triggers the workflow on push to the "main" branch
   push:
     branches:
-      - main
+      - test-app-s3-workflow
 
 jobs:
   provision-app-stack:
@@ -13,13 +13,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - name: Checkout app repo
-        uses: actions/checkout@v3
-        with:
-          repository: uturndata/tech-challenge-flask-app.git
-          path: ./tech-challenge-flask-app
-          submodules: recursive
-          token: ${{ secrets.REPO_TOKEN }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -27,10 +20,13 @@ jobs:
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: us-east-2
       - name: Copy app folder to an s3 bucket
+        uses: awact/s3-action@master
         env:
-          APP_BUCKET: s3://wordpress-media-store # TODO: change bucket name
-        run: |
-          aws s3 sync tech-challenge-flask-app $APP_BUCKET
+          SOURCE_DIR: './tech-challenge-flask-app'
+          AWS_REGION: 'us-east-2'
+          AWS_S3_BUCKET: 'hdms-test-mobileapp-deeplinking'
+          AWS_ACCESS_KEY_ID: ${{ secrets.TF_USER_AWS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_USER_AWS_SECRET }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:

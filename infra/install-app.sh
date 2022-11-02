@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export APP_BUCKET="s3://wordpress-media-store"
+export APP_BUCKET="hdms-test-mobileapp-deeplinking"
 export APP_FOLDER="tech-challenge-flask-app"
 
 # Install utilities
